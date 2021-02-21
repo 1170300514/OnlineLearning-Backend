@@ -24,12 +24,12 @@
             <artifactId>service_base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--common_utils 使用到其中提供的方法-->
-        <dependency>
-            <groupId>top.xyzhang</groupId>
-            <artifactId>common_utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--servicebase中引用了commonutil 依赖传递-->
+<!--        <dependency>-->
+<!--            <groupId>top.xyzhang</groupId>-->
+<!--            <artifactId>common_utils</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
 
         <!--<dependency>

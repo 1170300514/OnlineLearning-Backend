@@ -6,13 +6,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.xyzhang.commonutils.R;
+import top.xyzhang.eduservice.client.impl.VodClientDegrade;
 
 import java.util.List;
 
 /**
  * 服务远程调用 根据服务名调用其他服务中的方法
  */
-@FeignClient("service-vod")
+@FeignClient(name = "service-vod", fallback = VodClientDegrade.class) // 服务降级
 @Component
 public interface VodClient {
     /**
@@ -27,6 +28,6 @@ public interface VodClient {
      * 删除多个视频（删除课程时）
      */
     @DeleteMapping("/eduvod/video/removeVideosByCourse")
-    public R removeVideosByCourse(@RequestParam("videoList") List videoIdList);
+    public R removeVideosByCourse(@RequestParam("videoList") List<String> videoIdList);
 
 }

@@ -39,7 +39,7 @@ public class VodController {
      * 删除多个视频（删除课程时）
      */
     @DeleteMapping("removeVideosByCourse")
-    public R removeVideosByCourse(@RequestParam("videoList")List videoIdList) {
+    public R removeVideosByCourse(@RequestParam("videoList")List<String> videoIdList) {
         vodService.removeVideosByCourse(videoIdList);
         return R.ok();
     }

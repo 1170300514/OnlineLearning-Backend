@@ -8,6 +8,7 @@ import top.xyzhang.commonutils.R;
 import top.xyzhang.eduservice.client.VodClient;
 import top.xyzhang.eduservice.entity.EduVideo;
 import top.xyzhang.eduservice.service.EduVideoService;
+import top.xyzhang.servicebase.exceptionhandler.MyTestException;
 
 /**
  * <p>
@@ -46,7 +47,10 @@ public class EduVideoController {
         EduVideo video = videoService.getById(id);
         String videoSourceId = video.getVideoSourceId();
         if (StringUtils.hasLength(videoSourceId)) {
-            vodClient.removeAliyunVideo(videoSourceId);
+            R removeAliyunVideo = vodClient.removeAliyunVideo(videoSourceId);
+            if (removeAliyunVideo.getCode() == 20001) {
+                throw new MyTestException(20001, "删除视频时执行了兜底逻辑");
+            }
         }
 
         videoService.removeById(id);

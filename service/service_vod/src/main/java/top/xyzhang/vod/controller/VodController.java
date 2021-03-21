@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 import top.xyzhang.commonutils.R;
 import top.xyzhang.vod.service.VodService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/eduvod/video")
 @CrossOrigin
@@ -30,6 +32,15 @@ public class VodController {
     @DeleteMapping("removeVideo/{id}")
     public R deleteVideo(@PathVariable String id) {
         vodService.deleteVideo(id);
+        return R.ok();
+    }
+
+    /**
+     * 删除多个视频（删除课程时）
+     */
+    @DeleteMapping("removeVideosByCourse")
+    public R removeVideosByCourse(@RequestParam("videoList")List videoIdList) {
+        vodService.removeVideosByCourse(videoIdList);
         return R.ok();
     }
 }

@@ -7,6 +7,7 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.xyzhang.servicebase.exceptionhandler.MyTestException;
@@ -15,6 +16,7 @@ import top.xyzhang.vod.utils.ConstantPropertiesUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static top.xyzhang.vod.utils.InitVodClient.initVodClient;
 
@@ -75,6 +77,29 @@ public class VodServiceImpl implements VodService {
             DeleteVideoRequest request = new DeleteVideoRequest();
             DeleteVideoResponse response = new DeleteVideoResponse();
             request.setVideoIds(id);
+            response = client.getAcsResponse(request);
+        } catch (ClientException e) {
+            System.out.println("ErrorMessage = " + e.getLocalizedMessage());
+            throw new MyTestException(20001, "删除视频失败");
+        }
+    }
+
+    /**
+     * 删除多个视频
+     * @param videoIdList
+     */
+    @Override
+    public void removeVideosByCourse(List videoIdList) {
+        String accessKeyId = ConstantPropertiesUtils.Key_ID;
+        String accessKeySecret = ConstantPropertiesUtils.Key_Secret;
+        DefaultAcsClient client = null;
+        try {
+            client = initVodClient(accessKeyId, accessKeySecret);
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            DeleteVideoResponse response = new DeleteVideoResponse();
+            // 传递多个视频id 使用Apeche提供的方法StringUtils.join进行字符串转换
+            request.setVideoIds(StringUtils.join(videoIdList.toArray(), ","));
+
             response = client.getAcsResponse(request);
         } catch (ClientException e) {
             System.out.println("ErrorMessage = " + e.getLocalizedMessage());

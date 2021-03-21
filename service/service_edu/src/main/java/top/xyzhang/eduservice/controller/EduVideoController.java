@@ -2,8 +2,10 @@ package top.xyzhang.eduservice.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import top.xyzhang.commonutils.R;
+import top.xyzhang.eduservice.client.VodClient;
 import top.xyzhang.eduservice.entity.EduVideo;
 import top.xyzhang.eduservice.service.EduVideoService;
 
@@ -22,6 +24,9 @@ public class EduVideoController {
     @Autowired
     private EduVideoService videoService;
 
+    @Autowired
+    private VodClient vodClient;
+
     /**
      * 添加小节
      */
@@ -33,9 +38,17 @@ public class EduVideoController {
 
     /**
      * 删除小节
+     * TODO: 删除阿里云中的视频
      */
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id) {
+        // 根据小节id查询视频id进行删除
+        EduVideo video = videoService.getById(id);
+        String videoSourceId = video.getVideoSourceId();
+        if (StringUtils.hasLength(videoSourceId)) {
+            vodClient.removeAliyunVideo(videoSourceId);
+        }
+
         videoService.removeById(id);
         return R.ok();
     }

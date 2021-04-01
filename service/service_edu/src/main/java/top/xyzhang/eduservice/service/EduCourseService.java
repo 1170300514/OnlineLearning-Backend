@@ -1,9 +1,14 @@
 package top.xyzhang.eduservice.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.xyzhang.eduservice.entity.EduCourse;
+import top.xyzhang.eduservice.entity.frontvo.CourseFrontVo;
+import top.xyzhang.eduservice.entity.frontvo.CourseWebVo;
 import top.xyzhang.eduservice.entity.vo.CourseInfoVO;
 import top.xyzhang.eduservice.entity.vo.CoursePublishVO;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -24,4 +29,8 @@ public interface EduCourseService extends IService<EduCourse> {
     CoursePublishVO getPublishCourseInfo(String id);
 
     void removeCourseById(String id);
+
+    Map<String, Object> getCourseFrontList(Page<EduCourse> coursePage, CourseFrontVo courseFrontVo);
+
+    CourseWebVo getBaseCourseInfo(String courseId);
 }

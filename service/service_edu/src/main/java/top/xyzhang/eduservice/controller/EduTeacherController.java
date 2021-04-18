@@ -63,7 +63,7 @@ public class EduTeacherController {
                              @PathVariable long limit) {
 
         // 创建Page对象
-        Page<EduTeacher> teacherPage = new Page<>(1,3);
+        Page<EduTeacher> teacherPage = new Page<>(current,limit);
         // 调用方法时 把分页后的所有数据封装到Page中
         teacherService.page(teacherPage,null);
 

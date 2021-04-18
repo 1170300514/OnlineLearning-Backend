@@ -2,6 +2,7 @@ package top.xyzhang.educenter.service;
 
 import top.xyzhang.educenter.entity.UcenterMember;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.xyzhang.educenter.entity.vo.RegisterVo;
 
 /**
  * <p>
@@ -13,4 +14,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UcenterMemberService extends IService<UcenterMember> {
 
+    String login(UcenterMember member);
+
+    void register(RegisterVo registerVo);
+
+    UcenterMember getOpenIdMember(String openid);
+
+    UcenterMember saveWxLogin(String openid, String nickname, String headimgurl);
+
+    Integer countRegister(String day);
 }

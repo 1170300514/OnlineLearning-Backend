@@ -26,11 +26,11 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/eduservice/educourse")
-@CrossOrigin
-public class EduCourseController {
+    @CrossOrigin
+    public class EduCourseController {
 
-    @Autowired
-    private EduCourseService eduCourseService;
+        @Autowired
+        private EduCourseService eduCourseService;
 
     /**
      * 课程列表

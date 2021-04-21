@@ -64,6 +64,23 @@ public class UcenterMemberController {
         int num = memberService.countRegister(day);
         return R.ok().data("num", num);
     }
+
+    /**
+     * 根据用户id获取用户信息
+     * 订单模块需要远程调用
+     */
+    @PostMapping("getUserInfo/{userid}")
+    public R getUserInfo(@PathVariable String userid) {
+        UcenterMember member = memberService.getById(userid);
+        return R.ok()
+                .data("id",member.getId())
+                .data("mobile", member.getMobile())
+                .data("nickname", member.getNickname())
+                .data("sex", member.getSex())
+                .data("age", member.getAge())
+                .data("avatar", member.getAvatar());
+    }
+
 }
 
 

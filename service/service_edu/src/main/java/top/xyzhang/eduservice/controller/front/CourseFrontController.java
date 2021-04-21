@@ -54,4 +54,28 @@ public class CourseFrontController {
 
         return R.ok().data("courseWebVo", courseWebVo).data("chapterVideoList", video);
     }
+
+    /**
+     * 【订单模块】- 根据课程id查询课程信息
+     * 跨模块调用需要用R对象+字符串传递
+     */
+    @PostMapping("getCourseInfoOrder/{id}")
+    public R getCourseInfoOrder(@PathVariable String id) {
+        CourseWebVo courseInfo = courseService.getBaseCourseInfo(id);
+        return R.ok()
+                .data("id", courseInfo.getId())
+                .data("title", courseInfo.getTitle())
+                .data("price", courseInfo.getPrice())
+                .data("lessonNum", courseInfo.getLessonNum())
+                .data("cover", courseInfo.getCover())
+                .data("buyCount", courseInfo.getBuyCount())
+                .data("viewCount", courseInfo.getViewCount())
+                .data("description", courseInfo.getDescription())
+                .data("teacherId", courseInfo.getTeacherId())
+                .data("teacherName", courseInfo.getTeacherName())
+                .data("intro", courseInfo.getIntro())
+                .data("avatar", courseInfo.getAvatar())
+                .data("subjectLevelOne", courseInfo.getSubjectLevelOne())
+                .data("subjectLevelTwo", courseInfo.getSubjectLevelTwo());
+    }
 }

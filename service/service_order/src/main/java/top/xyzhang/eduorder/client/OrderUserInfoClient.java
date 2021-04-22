@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import top.xyzhang.commonutils.R;
+import top.xyzhang.eduorder.client.impl.OrderUserInfoClientDegrade;
 
 /**
  * 远程调用获取用户信息
  */
-@FeignClient(name = "service-ucenter")
+@FeignClient(name = "service-ucenter", fallback = OrderUserInfoClientDegrade.class)
 @Component
 public interface OrderUserInfoClient {
 

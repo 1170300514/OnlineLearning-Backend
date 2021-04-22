@@ -53,13 +53,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setCourseTitle((String) courseInfoData.get("title"));
         order.setCourseCover((String) courseInfoData.get("cover"));
         order.setTeacherName((String) courseInfoData.get("teacherName"));
-        order.setTotalFee((BigDecimal) courseInfoData.get("price"));
+        order.setTotalFee(BigDecimal.valueOf((double) courseInfoData.get("price")));
 
         order.setMemberId((String) userInfoData.get("id"));
         order.setNickname((String) userInfoData.get("nickname"));
         order.setMobile((String) userInfoData.get("mobile"));
         order.setPayType(1);
         order.setStatus(0);
+        baseMapper.insert(order);
 
         return order.getOrderNo();
     }

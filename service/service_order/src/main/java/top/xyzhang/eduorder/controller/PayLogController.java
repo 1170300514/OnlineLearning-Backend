@@ -1,10 +1,11 @@
 package top.xyzhang.eduorder.controller;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import top.xyzhang.commonutils.R;
+import top.xyzhang.eduorder.service.PayLogService;
 
 /**
  * <p>
@@ -15,9 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-17
  */
 @RestController
-@RequestMapping("/eduorder/pay-log")
+@RequestMapping("/eduorder/paylog")
 @CrossOrigin
 public class PayLogController {
+    @Autowired
+    private PayLogService payLogService;
 
+    /**
+     * 生成微信支付二维码
+     */
+    @GetMapping("createNative/{orderNo}")
+    public R createNative(@PathVariable String orderNo) {
+        return R.ok();
+    }
 }
 

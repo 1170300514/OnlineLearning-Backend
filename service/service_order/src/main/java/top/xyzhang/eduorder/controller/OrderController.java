@@ -37,12 +37,10 @@ public class OrderController {
      */
     @PostMapping("createOrder/{courseId}")
     public R createOrder(@PathVariable String courseId, HttpServletRequest request) {
-        System.out.println("=====================courseId"+courseId);
-
+        String userId = JwtUtils.getMemberIdByJwtToken(request);
         // 创建订单 返回订单号
-        String orderId = orderService.createOrder(courseId, JwtUtils.getMemberIdByJwtToken(request));
-        System.out.println("=====================orderId"+orderId);
-        return R.ok().data("orderId", orderId);
+        String orderNo = orderService.createOrder(courseId, userId);
+        return R.ok().data("orderId", orderNo);
     }
 
     /**

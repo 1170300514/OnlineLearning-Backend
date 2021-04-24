@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import top.xyzhang.commonutils.R;
 import top.xyzhang.eduorder.service.PayLogService;
 
+import java.util.Map;
+
 /**
  * <p>
  * 支付日志表 前端控制器
@@ -27,7 +29,27 @@ public class PayLogController {
      */
     @GetMapping("createNative/{orderNo}")
     public R createNative(@PathVariable String orderNo) {
-        return R.ok();
+        // 返回信息 包括二维码地址
+        Map map = payLogService.createNative(orderNo);
+        return R.ok().data(map);
+    }
+
+    /**
+     * 查询订单支付状态
+     */
+    @GetMapping("queryPayStatus/{orderNo}")
+    public R queryPayStatus(@PathVariable String orderNo) {
+        Map<String, String> map = payLogService.queryPayStatus(orderNo);
+        if (map.isEmpty()) {
+            return R.error().message("支付出错");
+        }
+        // 若返回map中不为空 通过map获取订单状态
+        if (map.get("trade_state").equals("SUCCESS")) {
+            // 添加记录到支付表 更新订单表订单状态
+            payLogService.updateOrdersStatus(map);
+            return R.ok().message("支付成功");
+        }
+        return R.ok().message("支付中");
     }
 }
 

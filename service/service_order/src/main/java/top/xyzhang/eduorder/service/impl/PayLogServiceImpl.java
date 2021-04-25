@@ -109,6 +109,8 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
             //3 得到请求返回内容
             String content = client.getContent();
             Map<String, String> xmlToMap = WXPayUtil.xmlToMap(content);
+            // TODO: test xml
+            System.out.println("=========微信返回数据xmlToMap"+xmlToMap);
             return xmlToMap;
         } catch (Exception e) {
             throw new MyTestException(20001, "查询订单支付状态失败");

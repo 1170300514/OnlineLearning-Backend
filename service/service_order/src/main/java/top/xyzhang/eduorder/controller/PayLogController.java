@@ -40,7 +40,8 @@ public class PayLogController {
     @GetMapping("queryPayStatus/{orderNo}")
     public R queryPayStatus(@PathVariable String orderNo) {
         Map<String, String> map = payLogService.queryPayStatus(orderNo);
-        if (map.isEmpty()) {
+        System.out.println("=====查询订单状态map集合"+map);
+        if (map == null) {
             return R.error().message("支付出错");
         }
         // 若返回map中不为空 通过map获取订单状态
@@ -49,7 +50,7 @@ public class PayLogController {
             payLogService.updateOrdersStatus(map);
             return R.ok().message("支付成功");
         }
-        return R.ok().message("支付中");
+        return R.ok().code(25000).message("支付中");
     }
 }
 
